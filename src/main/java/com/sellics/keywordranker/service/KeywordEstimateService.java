@@ -34,6 +34,7 @@ public class KeywordEstimateService {
             }
             distance--;
         }
+
         int score = ((distance * 100) / keyword.length());
         int depthBonus = measureDepth(prefix, keyword);
         int breadthBonus = measureBreadth(prefix);
@@ -50,7 +51,11 @@ public class KeywordEstimateService {
     private int measureBreadth(String prefix) {
         int breadth = Arrays.stream(nextChar)
                 .parallel()
-                .mapToInt(x -> (int) amazonSuggester.getSuggestions(prefix + x).getSuggestions().stream().filter(s -> !s.isSpellCorrected()).count())
+                .mapToInt(x -> (int) amazonSuggester.getSuggestions(prefix + x)
+                        .getSuggestions()
+                        .stream()
+                        .filter(s -> !s.isSpellCorrected())
+                        .count())
                 .sum();
         return Math.min((breadth * 100) / (nextChar.length * NO_OF_SUGGESTIONS), 100);
     }
@@ -58,13 +63,20 @@ public class KeywordEstimateService {
     private int measureDepth(String prefix, String keyword) {
         //Handle the case where there is no suffix because only the keyword itself had a match e.g. "tv"
         if(prefix.equals(keyword)) {
-            return Math.min((int) ((amazonSuggester.getSuggestions(keyword).getSuggestions().stream().filter(s -> !s.isSpellCorrected()).count() * 100) / 10), 100);
+            return Math.min((int) ((amazonSuggester
+                    .getSuggestions(keyword)
+                    .getSuggestions()
+                    .stream()
+                    .filter(s -> !s.isSpellCorrected())
+                    .count() * 100) / 10), 100);
         }
 
         String suffix = keyword.substring(prefix.length());
         int depth = 0;
         for(char x : suffix.toCharArray()) {
-            depth += amazonSuggester.getSuggestions(prefix).getSuggestions().stream().filter(s -> !s.isSpellCorrected()).count();
+            depth += amazonSuggester.getSuggestions(prefix).getSuggestions()
+                    .stream()
+                    .filter(s -> !s.isSpellCorrected()).count();
             prefix += x;
         }
         return Math.min((depth * 100) / (suffix.length() * 11), 100);

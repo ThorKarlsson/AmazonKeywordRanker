@@ -7,6 +7,8 @@ import kong.unirest.Unirest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @Slf4j
 public class AmazonSuggestionAPI {
@@ -16,9 +18,9 @@ public class AmazonSuggestionAPI {
 
     public Suggestions getSuggestions(String prefix) {
         String json = Unirest.get(BASE_URL)
-                .queryString("session-id", "144-8614407-7888854")
-                .queryString("customer-id", "AEFZ6T6X987TJ")
-                .queryString("request-id", "STAJ1XKWFTQW32XWY628")
+                .queryString("session-id", UUID.randomUUID().toString())
+                .queryString("customer-id", UUID.randomUUID().toString())
+                .queryString("request-id", UUID.randomUUID().toString())
                 .queryString("page-type", "Gateway")
                 .queryString("lop", "en_US")
                 .queryString("site-variant", "desktop")
