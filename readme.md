@@ -22,17 +22,17 @@ Finally we look at the volume of results in a depth search starting from the pre
 
 These two numbers we call breadth bonus and depth bonus. The idea here is to get an estimate of how many keywords our particular keyword is contending with. The breadth bonus is given a higher weight than the depth bonus as it is a more exhaustive search and also because depth can be deceptive in that certain keywords can have many permutations while still relating to the same product. A good example of this would be the keyword "qwddeco". While there are virtually no other keywords in the breadth search, a depth search will yield many different versions of the same keyword inflating the score.
 
-Assumptions
+**Assumptions**
 
 I've assumed that different amazon query parameters will not significantly affect the results from the suggester. This includes mobile vs desktop, changing the userid from time to time and changing the language.    
 
 
-Do you think the hint that we gave you earlier is correct and if so - why?
+**Do you think the hint that we gave you earlier is correct and if so - why?**
 
 Yes. Initially I thought it wasn't correct because in the response there is a parameter `shuffled: false` which I assumed would mean it is ordered by rank. However in using the API, I noticed the ordering would shuffle from letter to letter.  
 
 
 
-How precise do you think your outcome is and why?
+**How precise do you think your outcome is and why?**
 
 I think the outcome is precise relative to other keywords in the same letter group. However the biggest drawback I see is not being able to accurately compare across the alphabet. For example I would assume "airpods" ranks higher than "Zinc supplement" but they both score high in their own letter group and have similar scores. I think a more accurate program would do a more exhaustive search and scraping more keywords and saving results in a database. I think it would also be interesting to factor in spell checked results. My assumption there would be if a keyword is spell checked suggested, then it is more popular. However this would require some kind of fuzzy misspelling keyword predictor.      
