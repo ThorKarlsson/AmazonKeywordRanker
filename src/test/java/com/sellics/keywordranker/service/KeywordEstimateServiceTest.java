@@ -7,7 +7,7 @@ public class KeywordEstimateServiceTest {
 
     @Test
     public void estimateValueOfKeyword() {
-        var estimator = new KeywordEstimateService(new AmazonSuggestionAPI());
+        KeywordEstimateService estimator = new KeywordEstimateService(new AmazonSuggestionAPI());
 
         estimator.estimateValueOfKeyword("tv");
         estimator.estimateValueOfKeyword("pics peanut butter");

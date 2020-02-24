@@ -15,7 +15,7 @@ public class AmazonSuggestionAPI {
     private final String BASE_URL = "https://completion.amazon.com/api/2017/suggestions";
 
     public Suggestions getSuggestions(String prefix) {
-        var json = Unirest.get(BASE_URL)
+        String json = Unirest.get(BASE_URL)
                 .queryString("session-id", "144-8614407-7888854")
                 .queryString("customer-id", "AEFZ6T6X987TJ")
                 .queryString("request-id", "STAJ1XKWFTQW32XWY628")
