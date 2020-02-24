@@ -14,8 +14,8 @@ public class KeywordEstimateService {
 
     private AmazonSuggestionAPI amazonSuggester;
     private static final int NO_OF_SUGGESTIONS = 10;
-    private static final int DEPTH_BONUS_WEIGHT = 4;
-    private static final int BREADTH_BONUS_WEIGHT = 1;
+    private static final int DEPTH_BONUS_WEIGHT = 1;
+    private static final int BREADTH_BONUS_WEIGHT = 5;
     private String[] nextChar = {" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
     @Autowired
@@ -38,7 +38,7 @@ public class KeywordEstimateService {
         int score = ((distance * 100) / keyword.length());
         int depthBonus = measureDepth(prefix, keyword);
         int breadthBonus = measureBreadth(prefix);
-        int finalScore = (((depthBonus * DEPTH_BONUS_WEIGHT + breadthBonus * BREADTH_BONUS_WEIGHT) / (BREADTH_BONUS_WEIGHT + DEPTH_BONUS_WEIGHT)) + score) / 2;
+        int finalScore = ((((depthBonus * DEPTH_BONUS_WEIGHT) + (breadthBonus * BREADTH_BONUS_WEIGHT)) / (BREADTH_BONUS_WEIGHT + DEPTH_BONUS_WEIGHT)) + score) / 2;
 
         log.info("Initial score: {}", score);
         log.info("Depth bonus: {}", depthBonus);
